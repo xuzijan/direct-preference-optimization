@@ -1,0 +1,8 @@
+# DPO 复现
+.cache/
+outputs/
+wandb/
+__pycache__/
+*.pt
+*.pth
+*.safetensors

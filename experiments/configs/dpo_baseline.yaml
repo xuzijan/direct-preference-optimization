@@ -1,0 +1,21 @@
+# DPO Baseline 配置（与 train.py 配合使用）
+# 有网络时: python train.py model=gpt2 datasets=[hh] loss=sft exp_name=... + 本配置
+
+experiment:
+  name: dpo_paper_repro
+  seed: 42
+
+model:
+  handle: gpt2
+  # 或 model=pythia28 等，见 config/model/
+
+data:
+  datasets: [hh]
+  # mock 数据集用于离线验证: datasets=[mock]
+
+loss:
+  name: sft
+  # DPO: loss=dpo loss.beta=0.1
+
+trainer: BasicTrainer
+# 多 GPU: trainer=FSDPTrainer

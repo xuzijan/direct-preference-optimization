@@ -160,9 +160,37 @@ def get_hh(split: str, silent: bool = False, cache_dir: str = None) -> Dict[str,
     return data
 
 
+def get_mock(split: str, silent: bool = False, cache_dir: str = None) -> Dict:
+    """Minimal mock dataset for validation (no HuggingFace download)."""
+    if not silent:
+        print("Loading mock dataset (no network)...")
+    data = {
+        "\n\nHuman: What is 1+1?\n\nAssistant:": {
+            "responses": [" 2", " I don't know"],
+            "pairs": [(0, 1)],
+            "sft_target": " 2",
+        },
+        "\n\nHuman: Say hello.\n\nAssistant:": {
+            "responses": [" Hello!", " Goodbye"],
+            "pairs": [(0, 1)],
+            "sft_target": " Hello!",
+        },
+        "\n\nHuman: Test prompt.\n\nAssistant:": {
+            "responses": [" OK", " No"],
+            "pairs": [(0, 1)],
+            "sft_target": " OK",
+        },
+    }
+    if not silent:
+        print("done")
+    return data
+
+
 def get_dataset(name: str, split: str, silent: bool = False, cache_dir: str = None):
-    """Load the given dataset by name. Supported by default are 'shp', 'hh', and 'se'."""
-    if name == 'shp':
+    """Load the given dataset by name. Supported by default are 'shp', 'hh', 'se', and 'mock'."""
+    if name == 'mock':
+        data = get_mock(split, silent=silent, cache_dir=cache_dir)
+    elif name == 'shp':
         data = get_shp(split, silent=silent, cache_dir=cache_dir)
     elif name == 'hh':
         data = get_hh(split, silent=silent, cache_dir=cache_dir)
